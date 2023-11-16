@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Pokemon List</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item *ngFor="let pokemon of pokemonDetails; let i = index">
+      <a [routerLink]="['/detail', pokemon.name]" class="pokemon">
+        <div class="description" [ngStyle]="{ 'background-color': getTypeColor(pokemonDetails[i]) }">
+          <h2 class="name">{{ pokemon.name }}</h2>
+          <h4 class="type">{{ pokemon.types[0].type.name }}</h4>
+        </div>
+        <div class="image">
+          <img src="{{ pokemon.sprites.other?.dream_world.front_default }}" alt="{{pokemon.name}}"
+               style="height: 100%; width: auto; display: block; margin-inline: auto"/>
+        </div>
+      </a>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

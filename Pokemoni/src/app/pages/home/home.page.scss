@@ -1,0 +1,39 @@
+.pokemon {
+  height: 8rem;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  position: relative;
+
+  .description {
+    height: calc(100% - 2rem);
+    width: 80%;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    padding-left: 1rem;
+
+    .name, .type {
+      &::first-letter {
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .image {
+    position: absolute;
+    right: 0;
+    height: 7rem;
+    width: auto;
+    max-width: 50%;
+    z-index: 2;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
