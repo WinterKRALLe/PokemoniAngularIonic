@@ -3,10 +3,46 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/" text="Home"></ion-back-button>
     </ion-buttons>
-    <ion-title class="ion-text-center">{{pokemonName | titlecase}}</ion-title>
+    <ion-title class="ion-text-center">{{pokemonName | titlecase}} #{{pokemonDetails?.id}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  {{ JSON.stringify(pokemonDetails) }}
+
+  <div class="h-[calc(100vh/4)] lg:h-auto lg:w-auto lg:p-12">
+    <img [src]="image" class="h-full w-auto block mx-auto" alt="{{pokemonName}}.img"/>
+  </div>
+
+  <div class="flex justify-center gap-8 text-center mt-8 mb-4">
+    <div *ngIf="weightInLbsAndKg" class="flex flex-col">
+      <span>{{ weightInLbsAndKg.lbs.toFixed(1) }} lbs</span>
+      <span>({{ weightInLbsAndKg.kg }} kg)</span><span class="pt-2 text-xs text-[#707070]"
+    >Weight</span>
+    </div>
+    <div class="h-auto w-0.5 bg-gray-500"></div>
+    <div *ngIf="heightInFeetInchesAndMeters" class="flex flex-col">
+      <span>{{ heightInFeetInchesAndMeters.feet }}' {{heightInFeetInchesAndMeters.inches }}"</span>
+      <span>({{ heightInFeetInchesAndMeters.meters }} m)</span><span class="pt-2 text-xs text-[#707070]"
+    >Height</span
+    >
+    </div>
+  </div>
+
+  <div class="flex ion-justify-content-center text-sm gap-4">
+    <span *ngIf="type"
+          class="h-10 w-36 rounded-3xl flex justify-center items-center uppercase text-[#FFFFFF] font-bold pr-8 pl-2 fill-white"
+          [style.background]="'rgb(' + typeColor + ')'"
+          [style.box-shadow]="'rgba(' + typeColor + ', 0.7) 0px 0px 10px'"
+    ><img [src]="typeIcon" [alt]="typeIcon"/>{{ type }}</span>
+    <span *ngIf="secondType"
+          class="h-10 w-36 rounded-3xl flex justify-center items-center uppercase text-[#FFFFFF] font-bold pr-8 pl-2 fill-white"
+          [style.background]="'rgb(' + secondTypeColor + ')'"
+          [style.box-shadow]="'rgba(' + secondTypeColor + ', 0.7) 0px 0px 10px'"
+    ><img [src]="secondTypeIcon" [alt]="secondTypeIcon"/>{{ secondType }}</span>
+  </div>
+
+  <div class="px-3 mt-4 mb-8 lg:hidden block">
+   <!-- {pokemonSpecies.flavor_text_entries[6]?.flavor_text} -->
+  </div>
+
 </ion-content>
