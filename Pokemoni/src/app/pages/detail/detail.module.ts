@@ -1,12 +1,16 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
-import { IonicModule } from '@ionic/angular';
+import {IonicModule} from '@ionic/angular';
 
-import { DetailPageRoutingModule } from './detail-routing.module';
+import {DetailPageRoutingModule} from './detail-routing.module';
 
-import { DetailPage } from './detail.page';
+import {DetailPage} from './detail.page';
+import {SwiperDirective} from "../../directivies/swiper.directive";
+import {register} from "swiper/element/bundle";
+
+register()
 
 @NgModule({
   imports: [
@@ -15,6 +19,8 @@ import { DetailPage } from './detail.page';
     IonicModule,
     DetailPageRoutingModule
   ],
-  declarations: [DetailPage]
+  declarations: [DetailPage, SwiperDirective],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class DetailPageModule {}
+export class DetailPageModule {
+}

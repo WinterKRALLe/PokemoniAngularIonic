@@ -1,6 +1,6 @@
 .pokemon {
   height: 8rem;
-  width: 90%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,8 +13,14 @@
     border-radius: 25px;
     display: flex;
     flex-direction: column;
-    justify-content: end;
-    padding-left: 1rem;
+    justify-content: center;
+    gap: 1rem;
+    padding-left: .5rem;
+
+    .name {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
 
     .name, .type {
       &::first-letter {

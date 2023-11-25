@@ -1,19 +1,21 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/" text="Home"></ion-back-button>
+      <ion-back-button defaultHref="/" text="Back"></ion-back-button>
     </ion-buttons>
     <ion-title class="ion-text-center">{{pokemonName | titlecase}} #{{pokemonDetails?.id}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="star" slot="icon-only"/>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-
   <div class="h-[calc(100vh/4)] lg:h-auto lg:w-auto lg:p-12">
     <img [src]="image" class="h-full w-auto block mx-auto" alt="{{pokemonName}}.img"/>
   </div>
 
-  <div class="flex justify-center gap-8 text-center mt-8 mb-4">
+  <div class="flex justify-center gap-8 text-center my-4">
     <div *ngIf="weightInLbsAndKg" class="flex flex-col">
       <span>{{ weightInLbsAndKg.lbs.toFixed(1) }} lbs</span>
       <span>({{ weightInLbsAndKg.kg }} kg)</span><span class="pt-2 text-xs text-[#707070]"
@@ -31,8 +33,8 @@
   <div class="flex ion-justify-content-center text-sm gap-4">
     <span *ngIf="type"
           class="h-10 w-36 rounded-3xl flex justify-center items-center uppercase text-[#FFFFFF] font-bold pr-8 pl-2 fill-white"
-          [style.background]="'rgb(' + typeColor + ')'"
-          [style.box-shadow]="'rgba(' + typeColor + ', 0.7) 0px 0px 10px'"
+          [style.background]="'rgb(' + firstTypeColor + ')'"
+          [style.box-shadow]="'rgba(' + firstTypeColor + ', 0.7) 0px 0px 10px'"
     ><img [src]="typeIcon" [alt]="typeIcon"/>{{ type }}</span>
     <span *ngIf="secondType"
           class="h-10 w-36 rounded-3xl flex justify-center items-center uppercase text-[#FFFFFF] font-bold pr-8 pl-2 fill-white"
@@ -41,8 +43,65 @@
     ><img [src]="secondTypeIcon" [alt]="secondTypeIcon"/>{{ secondType }}</span>
   </div>
 
-  <div class="px-3 mt-4 mb-8 lg:hidden block">
-   <!-- {pokemonSpecies.flavor_text_entries[6]?.flavor_text} -->
+  <div class="px-3 mt-2 block" *ngIf="pokemonSpecies">
+    {{pokemonSpecies.flavor_text_entries[6].flavor_text}}
   </div>
+
+  <swiper-container appSwiper #swiperThumbs [config]="swiperThumbsConfig" class="mySwiper2">
+    <swiper-slide><div role="button">STATS</div></swiper-slide>
+    <swiper-slide><div role="button">EVOLUTIONS</div></swiper-slide>
+  </swiper-container>
+  <swiper-container appSwiper #swiper [config]="swiperConfig" thumbs-swiper=".mySwiper2" (slidechange)="slideChange($event)">
+    <swiper-slide class="mb-8">
+      <div class="flex items-center gap-4 text-sm w-full px-3">
+        <ul class="font-semibold"
+            [style.color]="'rgb(' + firstTypeColor + ')'"
+        >
+          <li class="h-5 mt-2" *ngFor="let p of pokemonDetails?.stats">{{ formatStatName(p.stat.name) }}</li>
+        </ul>
+        <ul class="text-center">
+          <li class="h-5 mt-2" *ngFor="let p of pokemonDetails?.stats">{{ p.base_stat }}</li>
+        </ul>
+        <ul class="w-full">
+          <li class="w-full flex items-center h-5 mt-2" *ngFor="let p of pokemonDetails?.stats">
+            <div class="w-full bg-[#e3e3e3] rounded-3xl">
+        <span
+          class="block rounded-3xl h-[10px]"
+          [style.width.%]="(p.base_stat / 1.75)"
+          [style.background]="'linear-gradient(to right, rgba(' + firstTypeColor + ', 0.4), rgb(' + firstTypeColor + '))'"></span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="w-full text-xl tracking-wide my-4"
+           [style.color]="'rgb(' + firstTypeColor + ')'"
+      >Weaknesses
+      </div>
+      <div class="w-full text-center grid grid-cols-3 place-items-center gap-y-4">
+           <span *ngFor="let d of doubleDamageFrom"
+                 class="text-sm w-20 rounded-3xl flex justify-center items-center text-[#FFFFFF] gap-2"
+           ><img [src]="iconPath(d)"
+                 [style.background]="'rgb(' + typeColor(d) + ')'"
+                 [style.box-shadow]="'rgba(' + typeColor(d) + ', 0.7) 0px 0px 10px'"
+                 class="flex-1 p-1 rounded-full"/>
+            <span class="flex-1 text-base">2x</span>
+          </span>
+        <span *ngFor="let d of halfDamageFrom"
+              class="text-sm w-20 rounded-3xl flex justify-center items-center text-[#FFFFFF] gap-2"
+        ><img [src]="iconPath(d)"
+              [style.background]="'rgb(' + typeColor(d) + ')'"
+              [style.box-shadow]="'rgba(' + typeColor(d) + ', 0.7) 0px 0px 10px'"
+              class="flex-1 p-1 rounded-full"/>
+            <span class="flex-1 text-base">1/2x</span>
+          </span>
+      </div>
+    </swiper-slide>
+    <swiper-slide>
+
+    </swiper-slide>
+  </swiper-container>
+
+
 
 </ion-content>

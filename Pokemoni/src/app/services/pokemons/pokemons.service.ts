@@ -5,6 +5,7 @@ import {PokemonList} from "../../models/pokemonList.model";
 import {Pokemon} from "../../models/pokemon.model";
 import {Species} from "../../models/pokemonSpecies.model";
 import {Observable} from "rxjs";
+import {Damage} from "../../models/pokemonDamage.model";
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,10 @@ export class PokemonsService {
   GetPokemonSpecies$(name: string): Observable<Species> {
     const url: string = `${environment.POKE_URL}pokemon-species/${name}`
     return this.http.get<Species>(url)
+  }
+
+  GetPokemonDamage$(id: number): Observable<Damage> {
+    const url: string = `${environment.POKE_URL}type/${id}`
+    return this.http.get<Damage>(url)
   }
 }
