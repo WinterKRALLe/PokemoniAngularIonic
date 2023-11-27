@@ -34,8 +34,8 @@ export class PokemonsService {
     return this.http.get<Species>(url)
   }
 
-  GetPokemonDamage$(id: number): Observable<Damage> {
-    const url: string = `${environment.POKE_URL}type/${id}`
+  GetPokemonDamage$(name: string): Observable<Damage> {
+    const url: string = `${environment.POKE_URL}type/${name}`
     return this.http.get<Damage>(url)
   }
 }

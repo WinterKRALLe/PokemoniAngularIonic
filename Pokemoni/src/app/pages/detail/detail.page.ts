@@ -19,7 +19,6 @@ export class DetailPage implements OnInit, AfterViewInit {
   @ViewChild('swiperThumbs') swiperThumbs!: ElementRef<SwiperContainer>;
 
   pokemonName: string | null = "";
-  pokemonId: number | null = null
   pokemonDetails: Pokemon | null = null;
   pokemonSpecies: Species | null = null
   pokemonWeaknesses: Damage | null = null
@@ -45,6 +44,7 @@ export class DetailPage implements OnInit, AfterViewInit {
     freeMode: true,
     watchSlidesProgress: true,
   };
+  activeSlideIndex: number = 0;
 
   constructor(private route: ActivatedRoute, private pokemonService: PokemonsService) {
   }
@@ -67,8 +67,6 @@ export class DetailPage implements OnInit, AfterViewInit {
           this.secondTypeColor = this.secondType !== "" ? `${typeColor(this.secondType)}` : "";
           this.secondTypeIcon = this.iconPath(this.secondType)
 
-          this.pokemonId = this.pokemonDetails?.id
-
           this.calculateWeightInLbsAndKg();
           this.getImage()
           this.convertCmToFeetInches(this.pokemonDetails.height * 10)
@@ -76,7 +74,7 @@ export class DetailPage implements OnInit, AfterViewInit {
           if (this.pokemonName != null) {
             forkJoin([
               this.pokemonService.GetPokemonSpecies$(this.pokemonName),
-              this.pokemonService.GetPokemonDamage$(this.pokemonId)
+              this.pokemonService.GetPokemonDamage$(this.type)
             ]).subscribe(([speciesData, damageData]: [any, any]) => {
               this.pokemonSpecies = speciesData;
               this.pokemonWeaknesses = damageData;
@@ -89,8 +87,14 @@ export class DetailPage implements OnInit, AfterViewInit {
     });
   }
 
-  slideChange(swiper: any) {
-    this.index = swiper.detail[0].activeIndex;
+  activeContentSlideIndex: number = 0;
+
+  slideChange(event: any) {
+    this.activeContentSlideIndex = event.activeIndex;
+  }
+
+  isActiveSlide(id: number) {
+    return id === this.index;
   }
 
   iconPath(type: string): string {

@@ -47,11 +47,16 @@
     {{pokemonSpecies.flavor_text_entries[6].flavor_text}}
   </div>
 
-  <swiper-container appSwiper #swiperThumbs [config]="swiperThumbsConfig" class="mySwiper2">
-    <swiper-slide><div role="button">STATS</div></swiper-slide>
-    <swiper-slide><div role="button">EVOLUTIONS</div></swiper-slide>
+  <swiper-container appSwiper #swiperThumbs [config]="swiperThumbsConfig" class="mySwiper2 my-4 w-full px-10">
+    <swiper-slide class="px-4 py-2 rounded-full" [style.--bg]="firstTypeColor">
+      <div role="button" class="">STATS</div>
+    </swiper-slide>
+    <swiper-slide class="px-4 py-2 rounded-full" [style.--bg]="firstTypeColor">
+      <div role="button">EVOLUTIONS</div>
+    </swiper-slide>
   </swiper-container>
-  <swiper-container appSwiper #swiper [config]="swiperConfig" thumbs-swiper=".mySwiper2" (slidechange)="slideChange($event)">
+  <swiper-container appSwiper #swiper [config]="swiperConfig" thumbs-swiper=".mySwiper2"
+                    (slidechange)="slideChange($event)">
     <swiper-slide class="mb-8">
       <div class="flex items-center gap-4 text-sm w-full px-3">
         <ul class="font-semibold"
@@ -101,7 +106,6 @@
 
     </swiper-slide>
   </swiper-container>
-
 
 
 </ion-content>
