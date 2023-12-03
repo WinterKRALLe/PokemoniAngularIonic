@@ -9,6 +9,7 @@ import {DetailPageRoutingModule} from './detail-routing.module';
 import {DetailPage} from './detail.page';
 import {SwiperDirective} from "../../directivies/swiper.directive";
 import {register} from "swiper/element/bundle";
+import {EvolutionItemComponent} from "../../components/evolution-item/evolution-item.component";
 
 register()
 
@@ -19,7 +20,7 @@ register()
     IonicModule,
     DetailPageRoutingModule
   ],
-  declarations: [DetailPage, SwiperDirective],
+    declarations: [DetailPage, SwiperDirective, EvolutionItemComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DetailPageModule {
