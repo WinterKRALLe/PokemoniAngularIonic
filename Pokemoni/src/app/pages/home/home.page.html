@@ -4,13 +4,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" (ionScroll)="onContentScroll($event)">
   <ion-list>
     <ion-item *ngFor="let pokemon of pokemonDetails; let i = index">
       <a [routerLink]="['/detail', pokemon.name]" class="pokemon">
-        <div class="description" [style.background]="'rgb(' + typeColor(pokemon.types[0].type.name) + ')'">
+        <div class="description" [style.background]="'rgb(' + typeColor(pokemon.types?.[0].type.name) + ')'">
           <h2 class="name">{{ pokemon.name }}</h2>
-          <h4 class="type">{{ pokemon.types[0].type.name }}</h4>
+          <h4 class="type">{{ pokemon.types?.[0].type.name }}</h4>
         </div>
         <div class="image">
           <img [src]="pokemon.sprites.other.dream_world.front_default" alt="{{pokemon.name}}"
@@ -21,10 +21,14 @@
   </ion-list>
 
 
-  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+  <ion-infinite-scroll  (ionInfinite)="loadMore($event)">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
       loadingText="Loading more data...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
+
+  <button #button *ngIf="showButton" (click)="openSearch()" class="fixed flex justify-center items-center w-16 aspect-square p-4 rounded-lg text-2xl bottom-0 right-0 mb-4 mr-8 dark:bg-zinc-700 bg-gray-50">
+    <ion-icon name="search-outline"></ion-icon>
+  </button>
 </ion-content>

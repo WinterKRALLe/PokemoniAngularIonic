@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Search</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-input
+    #searchInput
+    class="w-full py-2 px-8 placeholder:text-end"
+    [(ngModel)]="searchTerm"
+    (input)="searchChanged()"
+    placeholder="Enter a name"
+  />
+
+  <ion-list *ngIf="searchResults.length > 0">
+    <ion-item *ngFor="let result of searchResults">
+      <a [routerLink]="['/detail', result]" (click)="dismiss()" class="block pl-4 py-2 w-full h-full">
+        {{ result }}
+      </a>
+    </ion-item>
+  </ion-list>
+</ion-content>

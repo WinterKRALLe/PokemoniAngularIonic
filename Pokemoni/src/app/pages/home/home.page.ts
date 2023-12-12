@@ -1,14 +1,20 @@
-import { Component } from '@angular/core';
-import { PokemonsService } from "../../services/pokemons/pokemons.service";
-import { forkJoin } from 'rxjs';
-import { typeColor } from "../../utils/type-color.util";
+import {AfterViewInit, Component, ElementRef, NgZone, Renderer2, ViewChild} from '@angular/core';
+import {PokemonsService} from "../../services/pokemons/pokemons.service";
+import {forkJoin} from 'rxjs';
+import {typeColor} from "../../utils/type-color.util";
+import {IonContent, ModalController} from "@ionic/angular";
+import {SearchPage} from "../search/search.page";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements AfterViewInit{
+  @ViewChild(IonContent, { static: false }) content!: IonContent;
+  @ViewChild('button', { static: false, read: ElementRef }) button!: ElementRef;
+  showButton = true;
+  lastScrollTop = 0;
 
   data: any = {}
 
@@ -17,8 +23,35 @@ export class HomePage {
   offset: number = 0;
   limit: number = 12;
 
-  constructor(private pokemonService: PokemonsService) {
+  constructor(private renderer: Renderer2, private pokemonService: PokemonsService, private modalController: ModalController, private ngZone: NgZone) {
     this.loadPokemons();
+  }
+
+  ngAfterViewInit() {
+    this.content.ionScroll.subscribe((event: any) => this.onContentScroll(event));
+  }
+
+  onContentScroll(event: any) {
+    this.ngZone.run(() => {
+      const currentScrollTop = event.detail.scrollTop;
+
+      // Check the scroll direction
+      if (currentScrollTop > this.lastScrollTop) {
+        // Scrolling down
+        if (this.showButton) {
+          this.renderer.setStyle(this.button.nativeElement, 'display', 'none');
+          this.showButton = false;
+        }
+      } else {
+        // Scrolling up
+        if (!this.showButton) {
+          this.renderer.setStyle(this.button.nativeElement, 'display', 'block');
+          this.showButton = true;
+        }
+      }
+
+      this.lastScrollTop = currentScrollTop;
+    });
   }
 
   loadPokemons(event?: any): void {
@@ -43,6 +76,13 @@ export class HomePage {
   loadMore(event: any): void {
     this.loadPokemons(event);
   }
+
+  openSearch = async () => {
+    const modal = await this.modalController.create({
+      component: SearchPage,
+    });
+    return await modal.present();
+  };
 
   protected readonly typeColor = typeColor;
 }

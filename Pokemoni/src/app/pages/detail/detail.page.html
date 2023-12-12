@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/" text="Back"></ion-back-button>
     </ion-buttons>
-    <ion-title class="ion-text-center">{{pokemonName | titlecase}} #{{pokemonDetails?.id}}</ion-title>
+    <ion-title class="ion-text-center">{{ pokemonName | titlecase }} #{{ pokemonDetails?.id }}</ion-title>
     <ion-buttons slot="end">
       <ion-icon name="star" slot="icon-only"/>
     </ion-buttons>
@@ -27,7 +27,7 @@
     </div>
     <div class="h-auto w-0.5 bg-gray-500"></div>
     <div *ngIf="heightInFeetInchesAndMeters" class="flex flex-col">
-      <span>{{ heightInFeetInchesAndMeters.feet }}' {{heightInFeetInchesAndMeters.inches }}"</span>
+      <span>{{ heightInFeetInchesAndMeters.feet }}' {{ heightInFeetInchesAndMeters.inches }}"</span>
       <span>({{ heightInFeetInchesAndMeters.meters }} m)</span><span class="pt-2 text-xs text-[#707070]"
     >Height</span
     >
@@ -48,7 +48,7 @@
   </div>
 
   <div class="px-3 mt-2 block" *ngIf="pokemonSpecies">
-    {{pokemonSpecies.flavor_text_entries[6].flavor_text}}
+    {{ pokemonSpecies.flavor_text_entries[6].flavor_text }}
   </div>
 
   <swiper-container appSwiper #swiperThumbs [config]="swiperThumbsConfig" class="mySwiper2 my-4 w-full px-10">
@@ -117,17 +117,9 @@
     <swiper-slide class="px-6 divide-y divide-gray-500">
       <app-evolution-item
         class="w-full py-6 first:pt-0"
-        *ngIf="evolutionChain"
-        [speciesName]="firstEvo"
-        [speciesName1]="secondEvo"
-        [evoLevel]="evolutionChain.chain.evolves_to[0].evolution_details[0].min_level"
-      />
-      <app-evolution-item
-        class="w-full py-6 last:pb-0"
-        *ngIf="evolutionChain"
-        [speciesName]="secondEvo"
-        [speciesName1]="thirdEvo"
-        [evoLevel]="evolutionChain.chain.evolves_to[0].evolves_to[0].evolution_details[0].min_level"
+        *ngIf="pokemonSpecies && evolutionURL"
+        [pokemonDetails]="pokemonDetails"
+        [evolutionURL]="evolutionURL"
       />
     </swiper-slide>
   </swiper-container>

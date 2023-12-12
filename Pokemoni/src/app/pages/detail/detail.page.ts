@@ -8,7 +8,6 @@ import {Damage} from "../../models/pokemonDamage.model";
 import {forkJoin} from "rxjs";
 import {SwiperContainer} from "swiper/swiper-element";
 import {SwiperOptions} from "swiper/types";
-import {EvoChain} from "../../models/pokemonEvolutionChain.model";
 import {HttpClient} from "@angular/common/http";
 
 @Component({
@@ -24,7 +23,6 @@ export class DetailPage implements OnInit, AfterViewInit {
   pokemonDetails: Pokemon | null = null;
   pokemonSpecies: Species | null = null
   pokemonWeaknesses: Damage | null = null
-  evolutionChain: EvoChain | null = null
   image: string | undefined = ""
   weightInLbsAndKg: { lbs: number; kg: number } | null = null;
   heightInFeetInchesAndMeters: { feet: number; inches: string; meters: string } | null = null;
@@ -38,12 +36,7 @@ export class DetailPage implements OnInit, AfterViewInit {
   halfDamageFrom: any[] = []
   normalDamageFrom: any[] = [];
   index: number = 0
-  evolutionURL: string | null = ""
-  firstEvo: Pokemon | null = null
-  secondEvo: Pokemon | null = null
-  thirdEvo: Pokemon | null = null
-
-
+  evolutionURL: string | undefined
 
   swiperConfig: SwiperOptions = {
     spaceBetween: 10,
@@ -85,31 +78,17 @@ export class DetailPage implements OnInit, AfterViewInit {
             forkJoin([
               this.pokemonService.GetPokemonSpecies$(this.pokemonName),
               this.pokemonService.GetPokemonDamage$(this.type)
-            ]).subscribe(
-              ([speciesData, damageData]: [any, any]) => {
+            ]).subscribe({
+              next: ([speciesData, damageData]: [any, any]) => {
                 this.pokemonSpecies = speciesData;
+                this.evolutionURL = speciesData.evolution_chain.url;
                 this.pokemonWeaknesses = damageData;
-
                 this.updateDamage();
-
-                if (this.pokemonSpecies != null) {
-                  this.evolutionURL = this.pokemonSpecies.evolution_chain.url;
-
-                  this.http.get<EvoChain>(this.evolutionURL).subscribe({
-                    next: (evolutionData: any) => {
-                      this.evolutionChain = evolutionData;
-                      this.getEvos();
-                    },
-                    error: (evolutionError: any) => {
-                      console.error('Error fetching evolution chain:', evolutionError);
-                    }
-                  });
-                }
               },
-              (forkJoinError: any) => {
+              error: (forkJoinError: any) => {
                 console.error('Error fetching species and damage data:', forkJoinError);
               }
-            );
+            });
           }
         });
       }
@@ -125,41 +104,6 @@ export class DetailPage implements OnInit, AfterViewInit {
   iconPath(type: string): string {
     return `assets/icons/${type}.svg`;
   }
-
-  getEvos(): void {
-    if (this.evolutionChain?.chain.evolves_to.length !== 0) {
-      const firstEvo = this.evolutionChain?.chain.species.name;
-      const secondEvo = this.evolutionChain?.chain.evolves_to[0].species.name;
-
-      if (firstEvo && firstEvo != this.pokemonName) {
-        this.pokemonService.GetPokemon$(firstEvo).subscribe((firstEvolutionPokemon: any) => {
-          this.firstEvo = firstEvolutionPokemon
-        });
-      } else {
-        this.firstEvo = this.pokemonDetails
-      }
-
-      if (secondEvo && secondEvo !== this.pokemonName) {
-        this.pokemonService.GetPokemon$(secondEvo).subscribe((secondEvolutionPokemon: any) => {
-          this.secondEvo = secondEvolutionPokemon
-        });
-      } else {
-        this.secondEvo = this.pokemonDetails
-      }
-
-      if (this.evolutionChain?.chain.evolves_to[0].evolves_to.length !== 0) {
-        const thirdEvo = this.evolutionChain?.chain.evolves_to[0].evolves_to[0].species.name;
-        if (thirdEvo && thirdEvo !== this.pokemonName && thirdEvo !== secondEvo) {
-          this.pokemonService.GetPokemon$(thirdEvo).subscribe((thirdEvolutionPokemon: any) => {
-            this.thirdEvo = thirdEvolutionPokemon
-          });
-        } else {
-          this.thirdEvo = this.pokemonDetails
-        }
-      }
-    }
-  }
-
 
   getImage(): void {
     if (this.pokemonDetails) {

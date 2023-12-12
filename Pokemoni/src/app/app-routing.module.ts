@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path: 'detail/:name',
     loadChildren: () => import('./pages/detail/detail.module').then( m => m.DetailPageModule)
+  },
+  {
+    path: 'search',
+    loadChildren: () => import('./pages/search/search.module').then( m => m.SearchPageModule)
   }
 ];
 @NgModule({

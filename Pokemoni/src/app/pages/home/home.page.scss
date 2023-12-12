@@ -1,5 +1,5 @@
 .pokemon {
-  height: 8rem;
+  height: 7rem;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -13,12 +13,11 @@
     border-radius: 25px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 1rem;
-    padding-left: .5rem;
+    justify-content: space-around;
+    padding-left: 1rem;
 
     .name {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       font-weight: 600;
     }
 
@@ -32,7 +31,7 @@
   .image {
     position: absolute;
     right: 0;
-    height: 7rem;
+    height: 6rem;
     width: auto;
     max-width: 50%;
     z-index: 2;

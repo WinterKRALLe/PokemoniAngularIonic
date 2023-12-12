@@ -1,24 +1,49 @@
-<div *ngIf="speciesName && speciesName1 && evoLevel"
+<div *ngIf="evolutionChain && firstEvo && secondEvo"
      class="w-full flex justify-center items-center">
-  <a [routerLink]="['/detail', speciesName.name]" class="pr-6">
+  <a [routerLink]="['/detail', firstEvo.name]" class="pr-6">
     <img
       class="w-[25vw] h-auto block"
-      [src]="speciesName.sprites.other?.dream_world?.front_default"
-      [alt]="speciesName.name"
+      [src]="firstEvo.sprites.other?.dream_world?.front_default"
+      [alt]="firstEvo.name"
     />
-    <span class="block first-letter:uppercase">{{ speciesName.name }}</span>
+    <span class="block first-letter:uppercase">{{ firstEvo.name }}</span>
   </a>
   <div
     class="flex flex-col items-center gap-2 flex-1">
-    <span>Lv. {{ evoLevel }}</span>
+    <span *ngIf="first2secondLevel">Lv. {{ first2secondLevel }}</span>
     <span class="relative w-full h-px bg-gray-500 after:absolute before:absolute after:origin-bottom-right before:origin-top-right after:right-0 before:right-0 after:bg-gray-500 before:bg-gray-500 after:h-px before:h-px after:-rotate-[40deg] after:w-3 before:rotate-[40deg] before:w-3"></span>
   </div>
-  <a [routerLink]="['/detail', speciesName1.name]" class="pl-6">
+  <a [routerLink]="['/detail', secondEvo.name]" class="pl-6">
     <img
       class="aspect-square w-[25vw] block"
-      [src]="speciesName1.sprites.other?.dream_world?.front_default"
-      [alt]="speciesName1.name"
+      [src]="secondEvo.sprites.other?.dream_world?.front_default"
+      [alt]="secondEvo.name"
     />
-    <span class="block first-letter:uppercase">{{ speciesName1.name }}</span>
+    <span class="block first-letter:uppercase">{{ secondEvo.name }}</span>
+  </a>
+</div>
+
+<div *ngIf="evolutionChain && secondEvo && thirdEvo"
+     class="w-full flex justify-center items-center">
+  <a [routerLink]="['/detail', secondEvo.name]" class="pr-6">
+    <img
+      class="w-[25vw] h-auto block"
+      [src]="secondEvo.sprites.other?.dream_world?.front_default"
+      [alt]="secondEvo.name"
+    />
+    <span class="block first-letter:uppercase">{{ secondEvo.name }}</span>
+  </a>
+  <div
+    class="flex flex-col items-center gap-2 flex-1">
+    <span *ngIf="second2thirdLevel">Lv. {{ second2thirdLevel }}</span>
+    <span class="relative w-full h-px bg-gray-500 after:absolute before:absolute after:origin-bottom-right before:origin-top-right after:right-0 before:right-0 after:bg-gray-500 before:bg-gray-500 after:h-px before:h-px after:-rotate-[40deg] after:w-3 before:rotate-[40deg] before:w-3"></span>
+  </div>
+  <a [routerLink]="['/detail', thirdEvo.name]" class="pl-6">
+    <img
+      class="aspect-square w-[25vw] block"
+      [src]="thirdEvo.sprites.other?.dream_world?.front_default"
+      [alt]="thirdEvo.name"
+    />
+    <span class="block first-letter:uppercase">{{ thirdEvo.name }}</span>
   </a>
 </div>
