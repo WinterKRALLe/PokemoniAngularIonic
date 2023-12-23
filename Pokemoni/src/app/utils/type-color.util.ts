@@ -1,4 +1,4 @@
-export const typeColor = (type: string) => {
+export const typeColor = (type: any) => {
     switch (type) {
         case "water":
             return "84, 158, 222";

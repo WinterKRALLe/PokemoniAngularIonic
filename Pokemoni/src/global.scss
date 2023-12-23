@@ -59,3 +59,48 @@ swiper-slide img {
   height: auto;
   max-height: 100%;
 }
+
+.pokemon {
+  height: 7rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  position: relative;
+
+  .description {
+    height: calc(100% - 2rem);
+    width: 80%;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-left: 1rem;
+
+    .name {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    .name, .type {
+      &::first-letter {
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .image {
+    position: absolute;
+    right: 0;
+    height: 6rem;
+    width: auto;
+    max-width: 50%;
+    z-index: 2;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+}

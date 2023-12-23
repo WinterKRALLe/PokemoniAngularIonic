@@ -18,8 +18,8 @@ import steel from ".//src/assets/icons/steel.svg?raw";
 import flying from ".//src/assets/icons/flying.svg?raw";
 
 
-export const typeIcon = (type: string) => {
-  switch (type) {
+export const typeIcon = (typess: string) => {
+  switch (typess) {
     case "water":
       return waterdrop;
     case "fire":

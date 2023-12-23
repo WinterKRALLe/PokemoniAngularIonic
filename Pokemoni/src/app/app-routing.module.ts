@@ -17,7 +17,15 @@ const routes: Routes = [
   {
     path: 'search',
     loadChildren: () => import('./pages/search/search.module').then( m => m.SearchPageModule)
-  }
+  },
+  {
+    path: 'types',
+    loadChildren: () => import('./pages/types/types.module').then( m => m.TypesPageModule)
+  },
+  {
+    path: 'type/:name',
+    loadChildren: () => import('./pages/type/type.module').then( m => m.TypePageModule)
+  },
 ];
 @NgModule({
   imports: [

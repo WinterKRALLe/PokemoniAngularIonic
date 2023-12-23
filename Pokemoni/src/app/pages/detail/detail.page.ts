@@ -8,7 +8,6 @@ import {Damage} from "../../models/pokemonDamage.model";
 import {forkJoin} from "rxjs";
 import {SwiperContainer} from "swiper/swiper-element";
 import {SwiperOptions} from "swiper/types";
-import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-detail',
@@ -38,6 +37,8 @@ export class DetailPage implements OnInit, AfterViewInit {
   index: number = 0
   evolutionURL: string | undefined
 
+  isFavorite: boolean = false
+
   swiperConfig: SwiperOptions = {
     spaceBetween: 10,
   };
@@ -49,12 +50,14 @@ export class DetailPage implements OnInit, AfterViewInit {
     watchSlidesProgress: true,
   };
 
-  constructor(private route: ActivatedRoute, private pokemonService: PokemonsService, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private pokemonService: PokemonsService) {
   }
 
   ngAfterViewInit() {
     this.swiper.nativeElement.swiper.activeIndex = this.index;
     this.swiperThumbs.nativeElement.swiper.activeIndex = this.index;
+
+    this.loadStoredData();
   }
 
   ngOnInit(): void {
@@ -93,6 +96,7 @@ export class DetailPage implements OnInit, AfterViewInit {
         });
       }
     });
+    this.loadStoredData();
   }
 
   activeContentSlideIndex: number = 0;
@@ -146,7 +150,6 @@ export class DetailPage implements OnInit, AfterViewInit {
       .replace("attack", "ATK")
       .replace("defense", "DEF")
       .replace("speed", "SPD")
-    //.replace(/(\b\w)/g, match => match.toUpperCase());
   }
 
   updateDamage(): void {
@@ -158,19 +161,115 @@ export class DetailPage implements OnInit, AfterViewInit {
         (type: any) => type.name
       );
 
-      this.http.get<{ results: { name: string }[] }>("https://pokeapi.co/api/v2/type/").subscribe(
-        (data) => {
-          const allTypes: string[] = data.results
-            .map(type => type.name)
-            .filter(type => type !== 'unknown' && type !== 'shadow');
+      this.pokemonService.GetTypes$().subscribe(data => {
+        const allTypes: string[] = data.results
+          .map(type => type.name)
+          .filter(type => type !== 'unknown' && type !== 'shadow');
 
-          // Get types that are not in doubleDamageFrom or halfDamageFrom
-          this.normalDamageFrom = allTypes.filter(type => !this.doubleDamageFrom.includes(type) && !this.halfDamageFrom.includes(type));
-        },
-        (error) => {
-          console.error('Error fetching types:', error);
+        this.normalDamageFrom = allTypes.filter(type => !this.doubleDamageFrom.includes(type) && !this.halfDamageFrom.includes(type));
+      })
+    }
+  }
+
+  loadStoredData(): void {
+    const storedData = localStorage.getItem('pokemonData');
+
+    if (storedData) {
+      let parsedData: any;
+
+      try {
+        parsedData = JSON.parse(storedData);
+
+        // Convert to an array if it's not already
+        if (!Array.isArray(parsedData)) {
+          parsedData = [parsedData];
         }
-      );
+      } catch (error) {
+        console.error('Error parsing stored data:', error);
+        return;
+      }
+
+      // Example: Check if the current Pokémon is in favorites and isFavorite is true
+      if (this.pokemonName) {
+        const foundPokemon = parsedData.find(
+          (pokemon: any) =>
+            pokemon.name === this.pokemonName && pokemon.isFavorite === true
+        );
+
+        this.isFavorite = !!foundPokemon; // Set isFavorite based on whether the current Pokémon is found
+      }
+    }
+  }
+
+
+  toggleFavorite(): void {
+    if (this.pokemonDetails) {
+      this.isFavorite = !this.isFavorite;
+      if (this.isFavorite) {
+        this.addToFavorites();
+      } else {
+        this.removeFromFavorites();
+      }
+    }
+  }
+
+  addToFavorites(): void {
+    if (this.pokemonDetails) {
+      const storedData = localStorage.getItem('pokemonData');
+      let existingData: any[] = [];
+
+      try {
+        existingData = storedData ? JSON.parse(storedData) : [];
+
+        // Ensure that existingData is an array
+        if (!Array.isArray(existingData)) {
+          existingData = [];
+        }
+      } catch (error) {
+        console.error('Error parsing stored data:', error);
+      }
+
+      const newData = {
+        name: this.pokemonDetails.name,
+        image: this.image,
+        isFavorite: true,
+        // Add more properties as needed
+      };
+
+      const updatedData = [...existingData, newData];
+      localStorage.setItem('pokemonData', JSON.stringify(updatedData));
+    }
+  }
+
+  removeFromFavorites(): void {
+    if (this.pokemonDetails) {
+      const storedData = localStorage.getItem('pokemonData');
+      let existingData: any[] = [];
+
+      try {
+        existingData = storedData ? JSON.parse(storedData) : [];
+
+        // Ensure that existingData is an array
+        if (!Array.isArray(existingData)) {
+          existingData = [];
+        }
+      } catch (error) {
+        console.error('Error parsing stored data:', error);
+      }
+
+      // Find index of the Pokémon to remove
+      const indexToRemove = existingData.findIndex(pokemon => pokemon.name === this.pokemonDetails?.name);
+
+      if (indexToRemove !== -1) {
+        // Remove the Pokémon from the array
+        existingData.splice(indexToRemove, 1);
+
+        // Update local storage with the modified array
+        localStorage.setItem('pokemonData', JSON.stringify(existingData));
+
+        // Update the isFavorite flag accordingly
+        this.isFavorite = false;
+      }
     }
   }
 

@@ -6,6 +6,8 @@ import {Pokemon} from "../../models/pokemon.model";
 import {Species} from "../../models/pokemonSpecies.model";
 import {Observable} from "rxjs";
 import {Damage} from "../../models/pokemonDamage.model";
+import {Types} from "../../models/types.model";
+import {Type} from "../../models/type.model";
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +39,15 @@ export class PokemonsService {
   GetPokemonDamage$(name: string): Observable<Damage> {
     const url: string = `${environment.POKE_URL}type/${name}`
     return this.http.get<Damage>(url)
+  }
+
+  GetTypes$(): Observable<Types> {
+    const url: string = `${environment.POKE_URL}type`
+    return this.http.get<Types>(url)
+  }
+
+  GetType$(name: string): Observable<Type> {
+    const url: string = `${environment.POKE_URL}type/${name}`
+    return this.http.get<Type>(url)
   }
 }

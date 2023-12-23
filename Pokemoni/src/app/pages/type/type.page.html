@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/types" text="Back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{capitalizeFirstLetter(typeName)}} Types</ion-title>
+    <div slot="end" class="text-lg mr-2">{{pokemonsOfTypeCount}}</div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="pokemonsOfType">
+    <a [routerLink]="['/detail', pokemon.name]" *ngFor="let pokemon of pokemonsOfType" class="pokemon">
+      <div class="description" [style.background]="'rgb(' + typeColor(typeName) + ')'">
+      <h2 class="first-letter:uppercase">{{ pokemon.name }}</h2>
+      </div>
+      <div class="image">
+      <img [src]="pokemon.sprites.other?.['official-artwork']?.front_default" [alt]="pokemon.name" />
+      </div>
+    </a>
+  </div>
+</ion-content>

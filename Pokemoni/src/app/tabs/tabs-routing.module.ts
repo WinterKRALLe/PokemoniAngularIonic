@@ -12,6 +12,10 @@ const routes: Routes = [
         loadChildren: () => import('../pages/home/home.module').then(m => m.HomePageModule)
       },
       {
+        path: 'types',
+        loadChildren: () => import('../pages/types/types.module').then(m => m.TypesPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'
@@ -19,7 +23,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: '',
+    path: '', // Redirect to the home tab by default
     redirectTo: '/tabs/home',
     pathMatch: 'full'
   }

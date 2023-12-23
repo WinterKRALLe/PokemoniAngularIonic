@@ -1,0 +1,17 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Types</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+<div class="grid grid-cols-2 gap-4 p-2">
+  <div *ngFor="let type of allTypes; let i = index">
+    <a [routerLink]="['/type', type]" class="flex justify-center items-center w-full h-full rounded py-4" [style.background]="'rgb(' + typeColor(type) + ')'">
+        <h2 class="name first-letter:uppercase">{{ type }}</h2>
+    </a>
+  </div>
+</div>
+
+</ion-content>
