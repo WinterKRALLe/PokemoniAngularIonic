@@ -232,6 +232,7 @@ export class DetailPage implements OnInit, AfterViewInit {
       const newData = {
         name: this.pokemonDetails.name,
         image: this.image,
+        type: this.firstTypeColor,
         isFavorite: true,
         // Add more properties as needed
       };

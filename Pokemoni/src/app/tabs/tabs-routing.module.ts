@@ -16,6 +16,10 @@ const routes: Routes = [
         loadChildren: () => import('../pages/types/types.module').then(m => m.TypesPageModule)
       },
       {
+        path: 'favorite',
+        loadChildren: () => import('../pages/favorite/favorite.module').then( m => m.FavoritePageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'
