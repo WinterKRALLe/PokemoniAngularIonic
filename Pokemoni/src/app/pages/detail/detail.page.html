@@ -19,13 +19,13 @@
     <img [src]="image" class="h-full w-auto block mx-auto" alt="{{pokemonName}}.img"/>
   </div>
 
-  <div class="flex justify-center gap-8 text-center my-4">
+  <div class="flex justify-center text-center my-4">
     <div *ngIf="weightInLbsAndKg" class="flex flex-col">
       <span>{{ weightInLbsAndKg.lbs.toFixed(1) }} lbs</span>
       <span>({{ weightInLbsAndKg.kg }} kg)</span><span class="pt-2 text-xs text-[#707070]"
     >Weight</span>
     </div>
-    <div class="h-auto w-0.5 bg-gray-500"></div>
+    <div class="h-auto w-0.5 bg-gray-500 mx-8"></div>
     <div *ngIf="heightInFeetInchesAndMeters" class="flex flex-col">
       <span>{{ heightInFeetInchesAndMeters.feet }}' {{ heightInFeetInchesAndMeters.inches }}"</span>
       <span>({{ heightInFeetInchesAndMeters.meters }} m)</span><span class="pt-2 text-xs text-[#707070]"
@@ -34,13 +34,15 @@
     </div>
   </div>
 
-  <div class="flex justify-center items-center text-sm gap-4">
+  <div class="flex justify-center items-center text-sm">
     <span *ngIf="type"
+          [class]="secondType ? 'mr-2' : ''"
           class="h-10 w-36 rounded-3xl flex justify-center items-center gap-1 uppercase text-[#FFFFFF] font-bold fill-white"
           [style.background]="'rgb(' + firstTypeColor + ')'"
           [style.box-shadow]="'rgba(' + firstTypeColor + ', 0.7) 0px 0px 10px'"
     ><img [src]="typeIcon" [alt]="typeIcon"/>{{ type }}</span>
     <span *ngIf="secondType"
+          [class]="secondType ? 'ml-2' : ''"
           class="h-10 w-36 rounded-3xl flex justify-center items-center gap-1 uppercase text-[#FFFFFF] font-bold fill-white"
           [style.background]="'rgb(' + secondTypeColor + ')'"
           [style.box-shadow]="'rgba(' + secondTypeColor + ', 0.7) 0px 0px 10px'"
@@ -62,13 +64,13 @@
   <swiper-container appSwiper #swiper [config]="swiperConfig" thumbs-swiper=".mySwiper2"
                     (slidechange)="slideChange($event)">
     <swiper-slide class="mb-8">
-      <div class="flex items-center gap-4 text-sm w-full px-3">
+      <div class="flex items-center text-sm w-full px-3">
         <ul class="font-semibold"
             [style.color]="'rgb(' + firstTypeColor + ')'"
         >
           <li class="h-5 mt-2" *ngFor="let p of pokemonDetails?.stats">{{ formatStatName(p.stat.name) }}</li>
         </ul>
-        <ul class="text-center">
+        <ul class="text-center mx-4">
           <li class="h-5 mt-2" *ngFor="let p of pokemonDetails?.stats">{{ p.base_stat }}</li>
         </ul>
         <ul class="w-full">
@@ -87,30 +89,30 @@
            [style.color]="'rgb(' + firstTypeColor + ')'"
       >Weaknesses
       </div>
-      <div class="w-full text-center grid grid-cols-3 place-items-center gap-y-4">
+      <div class="w-full text-center grid grid-cols-3 place-items-center">
            <span *ngFor="let d of doubleDamageFrom"
-                 class="text-sm w-20 rounded-3xl flex justify-center items-center text-[#FFFFFF] gap-2"
-           ><img [src]="iconPath(d)"
+                 class="text-sm w-20 rounded-3xl flex justify-center items-center my-4"
+           ><img src="/assets/icons/{{d}}.svg"
                  [style.background]="'rgb(' + typeColor(d) + ')'"
                  [style.box-shadow]="'rgba(' + typeColor(d) + ', 0.7) 0px 0px 10px'"
                  class="flex-1 p-1 rounded-full"/>
-            <span class="flex-1 text-base">2x</span>
+            <span class="flex-1 text-base ml-2">2x</span>
           </span>
         <span *ngFor="let d of normalDamageFrom"
-              class="text-sm w-20 rounded-3xl flex justify-center items-center text-[#FFFFFF] gap-2"
-        ><img [src]="iconPath(d)"
-              [style.background]="'rgb(' + typeColor(d) + ')'"
-              [style.box-shadow]="'rgba(' + typeColor(d) + ', 0.7) 0px 0px 10px'"
-              class="flex-1 p-1 rounded-full"/>
-            <span class="flex-1 text-base">1x</span>
+              class="text-sm w-20 rounded-3xl flex justify-center items-center my-4">
+        <img src="/assets/icons/{{d}}.svg"
+             [style.background]="'rgb(' + typeColor(d) + ')'"
+             [style.box-shadow]="'rgba(' + typeColor(d) + ', 0.7) 0px 0px 10px'"
+             class="flex-1 p-1 rounded-full"/>
+            <span class="flex-1 text-base ml-2">1x</span>
           </span>
         <span *ngFor="let d of halfDamageFrom"
-              class="text-sm w-20 rounded-3xl flex justify-center items-center text-[#FFFFFF] gap-2"
-        ><img [src]="iconPath(d)"
+              class="text-sm w-20 rounded-3xl flex justify-center items-center my-4"
+        ><img src="/assets/icons/{{d}}.svg"
               [style.background]="'rgb(' + typeColor(d) + ')'"
               [style.box-shadow]="'rgba(' + typeColor(d) + ', 0.7) 0px 0px 10px'"
               class="flex-1 p-1 rounded-full"/>
-            <span class="flex-1 text-base">1/2x</span>
+            <span class="flex-1 text-base ml-2">1/2x</span>
           </span>
       </div>
     </swiper-slide>

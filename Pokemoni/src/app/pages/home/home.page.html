@@ -13,7 +13,7 @@
           <h4 class="type">{{ pokemon.types?.[0].type.name }}</h4>
         </div>
         <div class="image">
-          <img [src]="pokemon.sprites.other.dream_world.front_default" alt="{{pokemon.name}}"
+          <img [src]="pokemon.sprites.other?.['official-artwork']?.front_default" alt="{{pokemon.name}}"
                class="h-full w-auto block mx-auto"/>
         </div>
       </a>

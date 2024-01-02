@@ -1,17 +1,22 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Favorites</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="refresh()">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div *ngIf="localStorageData">
-    <a [routerLink]="['/detail', pokemon.name]" *ngFor="let pokemon of localStorageData" class="pokemon">
+  <div *ngIf="pokemonData">
+    <a [routerLink]="['/detail', pokemon.name]" *ngFor="let pokemon of pokemonData" class="pokemon">
       <div class="description" [style.background]="'rgb(' + pokemon.type + ')'">
-        <h2 class="first-letter:uppercase text-xl">{{ pokemon.name }}</h2>
+        <h2 class="name">{{ pokemon.name }}</h2>
       </div>
       <div class="image">
-        <img [src]="pokemon.image" [alt]="pokemon.name" />
+        <img [src]="pokemon.image" [alt]="pokemon.name"/>
       </div>
     </a>
   </div>

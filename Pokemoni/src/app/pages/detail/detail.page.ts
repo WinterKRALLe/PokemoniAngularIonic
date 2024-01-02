@@ -61,6 +61,7 @@ export class DetailPage implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+
     this.route.paramMap.subscribe(params => {
       this.pokemonName = params.get('name');
       if (this.pokemonName != null) {

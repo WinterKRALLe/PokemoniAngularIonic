@@ -1,21 +1,26 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-favorite',
   templateUrl: './favorite.page.html',
   styleUrls: ['./favorite.page.scss'],
 })
-export class FavoritePage {
-  localStorageData: any;
+export class FavoritePage implements OnInit {
+  pokemonData: any[] = [];
 
-  constructor() {}
+  constructor() {
+  }
 
-  ionViewDidEnter() {
+  ngOnInit() {
     this.loadData();
   }
 
   loadData() {
     const storedData = localStorage.getItem('pokemonData');
-    this.localStorageData = storedData ? JSON.parse(storedData) : null;
+    this.pokemonData = storedData ? JSON.parse(storedData) : null;
+  }
+
+  refresh() {
+   window.location.reload()
   }
 }

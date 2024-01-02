@@ -29,14 +29,6 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-swiper-container {
-  --swiper-pagination-bullet-inactive-color: var(--ion-color-step-200, #cccccc);
-  --swiper-pagination-color: var(--ion-color-primary, #3880ff);
-  --swiper-pagination-progressbar-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.25);
-  --swiper-scrollbar-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.1);
-  --swiper-scrollbar-drag-bg-color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.5);
-}
-
 swiper-slide {
   display: flex;
   position: relative;
@@ -93,9 +85,8 @@ swiper-slide img {
   .image {
     position: absolute;
     right: 0;
-    height: 6rem;
-    width: auto;
-    max-width: 50%;
+    width: 25%;
+    height: auto;
     z-index: 2;
 
     img {
