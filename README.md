@@ -6,7 +6,8 @@
 </div>
 <br>
 <br>
-Cross-platform web/app vytvořena pomocí [Ionic frameworku](https://ionicframework.com/) a [PokeAPI](https://pokeapi.co)  
+Cross-platform web/app vytvořena pomocí [Ionic frameworku](https://ionicframework.com/) a [PokeAPI](https://pokeapi.co)
+<br>
 <div align="center">
   <img width="40%" src="https://github.com/WinterKRALLe/PokemoniAngularIonic/blob/main/.github/homepage.png?raw=true"  />
   <img width="40%" src="https://github.com/WinterKRALLe/PokemoniAngularIonic/blob/main/.github/detailpage.png?raw=true"  />
