@@ -4,7 +4,8 @@
     <img src="https://img.shields.io/github/stars/WinterKRALLe/PokemoniAngularIonic?style=for-the-badge&color=e6c419&labelColor=1d1b16">
     <img src="https://img.shields.io/github/repo-size/WinterKRALLe/PokemoniAngularIonic?style=for-the-badge&color=a8c7ff&labelColor=1a1b1f">
 </div>
-
+<br>
+<br>
 Cross-platform web/app vytvořena pomocí [Ionic frameworku](https://ionicframework.com/) a [PokeAPI](https://pokeapi.co)
 
 <div align="center">
