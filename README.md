@@ -7,7 +7,7 @@
 
 Cross-platform web/app vytvořena pomocí [Ionic frameworku](https://ionicframework.com/) a [PokeAPI](https://pokeapi.co)
 
-<div style="display: flex; flex-wrap: wrap; justify-content:center; gap: 2rem">
+<div align="center">
   <img width="40%" src="https://github.com/WinterKRALLe/PokemoniAngularIonic/blob/main/.github/homepage.png?raw=true"  />
   <img width="40%" src="https://github.com/WinterKRALLe/PokemoniAngularIonic/blob/main/.github/detailpage.png?raw=true"  />
   <img width="40%" src="https://github.com/WinterKRALLe/PokemoniAngularIonic/blob/main/.github/typespage.png?raw=true" />
