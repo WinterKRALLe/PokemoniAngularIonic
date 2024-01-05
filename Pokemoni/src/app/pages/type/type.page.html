@@ -9,6 +9,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <div *ngIf="isLoading" class="absolute z-50 top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-zinc-800/25 backdrop-filter backdrop-blur-lg">
+    <div class="loader"></div>
+  </div>
+
   <div *ngIf="pokemonsOfType">
     <a [routerLink]="['/detail', pokemon.name]" *ngFor="let pokemon of pokemonsOfType" class="pokemon">
       <div class="description" [style.background]="'rgb(' + typeColor(typeName) + ')'">

@@ -16,12 +16,15 @@ export class TypePage implements OnInit {
   pokemonsOfType: Pokemon[] | null = null;
   pokemonsOfTypeCount: number = 0
 
+  isLoading: boolean = false
+
   constructor(private route: ActivatedRoute, private pokemonService: PokemonsService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.typeName = params.get('name');
       if (this.typeName) {
+        this.isLoading = true
         this.getPokemonsOfTypeName(this.typeName);
       }
     });
@@ -44,10 +47,11 @@ export class TypePage implements OnInit {
     forkJoin(requests).subscribe({
       next: (data: Pokemon[]) => {
         this.pokemonsOfType = data;
-        console.log(this.pokemonsOfType)
+        this.isLoading = false
       },
       error: (forkJoinError: any) => {
         console.error('Error fetching species and damage data:', forkJoinError);
+        this.isLoading = false
       }
     });
   }

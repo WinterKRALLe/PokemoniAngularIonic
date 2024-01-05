@@ -38,6 +38,7 @@ export class DetailPage implements OnInit, AfterViewInit {
   evolutionURL: string | undefined
 
   isFavorite: boolean = false
+  isLoading: boolean = false
 
   swiperConfig: SwiperOptions = {
     spaceBetween: 10,
@@ -65,6 +66,7 @@ export class DetailPage implements OnInit, AfterViewInit {
     this.route.paramMap.subscribe(params => {
       this.pokemonName = params.get('name');
       if (this.pokemonName != null) {
+        this.isLoading = true
         this.pokemonService.GetPokemon$(this.pokemonName).subscribe((data: Pokemon): void => {
           this.pokemonDetails = data;
           this.type = this.pokemonDetails ? this.pokemonDetails.types[0].type.name : ""
@@ -88,9 +90,11 @@ export class DetailPage implements OnInit, AfterViewInit {
                 this.evolutionURL = speciesData.evolution_chain.url;
                 this.pokemonWeaknesses = damageData;
                 this.updateDamage();
+                this.isLoading = false
               },
               error: (forkJoinError: any) => {
                 console.error('Error fetching species and damage data:', forkJoinError);
+                this.isLoading = false
               }
             });
           }
@@ -181,7 +185,6 @@ export class DetailPage implements OnInit, AfterViewInit {
       try {
         parsedData = JSON.parse(storedData);
 
-        // Convert to an array if it's not already
         if (!Array.isArray(parsedData)) {
           parsedData = [parsedData];
         }
@@ -190,14 +193,13 @@ export class DetailPage implements OnInit, AfterViewInit {
         return;
       }
 
-      // Example: Check if the current Pokémon is in favorites and isFavorite is true
       if (this.pokemonName) {
         const foundPokemon = parsedData.find(
           (pokemon: any) =>
             pokemon.name === this.pokemonName && pokemon.isFavorite === true
         );
 
-        this.isFavorite = !!foundPokemon; // Set isFavorite based on whether the current Pokémon is found
+        this.isFavorite = !!foundPokemon;
       }
     }
   }
@@ -222,7 +224,6 @@ export class DetailPage implements OnInit, AfterViewInit {
       try {
         existingData = storedData ? JSON.parse(storedData) : [];
 
-        // Ensure that existingData is an array
         if (!Array.isArray(existingData)) {
           existingData = [];
         }
@@ -235,7 +236,6 @@ export class DetailPage implements OnInit, AfterViewInit {
         image: this.image,
         type: this.firstTypeColor,
         isFavorite: true,
-        // Add more properties as needed
       };
 
       const updatedData = [...existingData, newData];
@@ -251,7 +251,6 @@ export class DetailPage implements OnInit, AfterViewInit {
       try {
         existingData = storedData ? JSON.parse(storedData) : [];
 
-        // Ensure that existingData is an array
         if (!Array.isArray(existingData)) {
           existingData = [];
         }
@@ -259,17 +258,13 @@ export class DetailPage implements OnInit, AfterViewInit {
         console.error('Error parsing stored data:', error);
       }
 
-      // Find index of the Pokémon to remove
       const indexToRemove = existingData.findIndex(pokemon => pokemon.name === this.pokemonDetails?.name);
 
       if (indexToRemove !== -1) {
-        // Remove the Pokémon from the array
         existingData.splice(indexToRemove, 1);
 
-        // Update local storage with the modified array
         localStorage.setItem('pokemonData', JSON.stringify(existingData));
 
-        // Update the isFavorite flag accordingly
         this.isFavorite = false;
       }
     }

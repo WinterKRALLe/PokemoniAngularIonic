@@ -1,5 +1,5 @@
 import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 
 import {IonicModule} from '@ionic/angular';
@@ -14,12 +14,13 @@ import {EvolutionItemComponent} from "../../components/evolution-item/evolution-
 register()
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    DetailPageRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        DetailPageRoutingModule,
+        NgOptimizedImage
+    ],
     declarations: [DetailPage, SwiperDirective, EvolutionItemComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

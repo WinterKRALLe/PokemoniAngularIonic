@@ -11,9 +11,15 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+
+  <div *ngIf="isLoading" class="absolute z-50 top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-zinc-800/25 backdrop-filter backdrop-blur-lg">
+    <div class="loader"></div>
+  </div>
+
   <div class="absolute -z-10 w-full h-[21vh] bg-amber-500 rounded-[0_0_50%_50%_/_88%_88%_12%_12%]"
-       [style.background]="'linear-gradient(to right, rgba(' + firstTypeColor + ', 0.7), rgb(' + firstTypeColor + '))'"
-  ><span class="pr-4 float-right">#{{ pokemonDetails?.id }}</span></div>
+       [style.background]="'linear-gradient(to right, rgba(' + firstTypeColor + ', 0.7), rgb(' + firstTypeColor + '))'">
+    <span class="pr-4 float-right">#{{ pokemonDetails?.id }}</span>
+  </div>
 
   <div class="h-[calc(100vh/4)] lg:h-auto lg:w-auto lg:p-12">
     <img [src]="image" class="h-full w-auto block mx-auto" alt="{{pokemonName}}.img"/>
@@ -22,31 +28,28 @@
   <div class="flex justify-center text-center my-4">
     <div *ngIf="weightInLbsAndKg" class="flex flex-col">
       <span>{{ weightInLbsAndKg.lbs.toFixed(1) }} lbs</span>
-      <span>({{ weightInLbsAndKg.kg }} kg)</span><span class="pt-2 text-xs text-[#707070]"
-    >Weight</span>
+      <span>({{ weightInLbsAndKg.kg }} kg)</span><span class="pt-2 text-xs text-[#707070]">Weight</span>
     </div>
     <div class="h-auto w-0.5 bg-gray-500 mx-8"></div>
     <div *ngIf="heightInFeetInchesAndMeters" class="flex flex-col">
       <span>{{ heightInFeetInchesAndMeters.feet }}' {{ heightInFeetInchesAndMeters.inches }}"</span>
-      <span>({{ heightInFeetInchesAndMeters.meters }} m)</span><span class="pt-2 text-xs text-[#707070]"
-    >Height</span
-    >
+      <span>({{ heightInFeetInchesAndMeters.meters }} m)</span><span class="pt-2 text-xs text-[#707070]">Height</span>
     </div>
   </div>
 
   <div class="flex justify-center items-center text-sm">
-    <span *ngIf="type"
-          [class]="secondType ? 'mr-2' : ''"
+    <span *ngIf="type" [class]="secondType ? 'mr-2' : ''"
           class="h-10 w-36 rounded-3xl flex justify-center items-center gap-1 uppercase text-[#FFFFFF] font-bold fill-white"
           [style.background]="'rgb(' + firstTypeColor + ')'"
-          [style.box-shadow]="'rgba(' + firstTypeColor + ', 0.7) 0px 0px 10px'"
-    ><img [src]="typeIcon" [alt]="typeIcon"/>{{ type }}</span>
-    <span *ngIf="secondType"
-          [class]="secondType ? 'ml-2' : ''"
+          [style.box-shadow]="'rgba(' + firstTypeColor + ', 0.7) 0px 0px 10px'"><img [src]="typeIcon"
+                                                                                     [alt]="typeIcon"/>{{
+        type
+      }}</span>
+    <span *ngIf="secondType" [class]="secondType ? 'ml-2' : ''"
           class="h-10 w-36 rounded-3xl flex justify-center items-center gap-1 uppercase text-[#FFFFFF] font-bold fill-white"
           [style.background]="'rgb(' + secondTypeColor + ')'"
-          [style.box-shadow]="'rgba(' + secondTypeColor + ', 0.7) 0px 0px 10px'"
-    ><img [src]="secondTypeIcon" [alt]="secondTypeIcon"/>{{ secondType }}</span>
+          [style.box-shadow]="'rgba(' + secondTypeColor + ', 0.7) 0px 0px 10px'"><img [src]="secondTypeIcon"
+                                                                                      [alt]="secondTypeIcon"/>{{ secondType }}</span>
   </div>
 
   <div class="px-3 mt-2 block" *ngIf="pokemonSpecies">
@@ -65,9 +68,7 @@
                     (slidechange)="slideChange($event)">
     <swiper-slide class="mb-8">
       <div class="flex items-center text-sm w-full px-3">
-        <ul class="font-semibold"
-            [style.color]="'rgb(' + firstTypeColor + ')'"
-        >
+        <ul class="font-semibold" [style.color]="'rgb(' + firstTypeColor + ')'">
           <li class="h-5 mt-2" *ngFor="let p of pokemonDetails?.stats">{{ formatStatName(p.stat.name) }}</li>
         </ul>
         <ul class="text-center mx-4">
@@ -76,53 +77,41 @@
         <ul class="w-full">
           <li class="w-full flex items-center h-5 mt-2" *ngFor="let p of pokemonDetails?.stats">
             <div class="w-full bg-[#e3e3e3] rounded-3xl">
-        <span
-          class="block rounded-3xl h-[10px]"
-          [style.width.%]="(p.base_stat / 1.75)"
-          [style.background]="'linear-gradient(to right, rgba(' + firstTypeColor + ', 0.4), rgb(' + firstTypeColor + '))'"></span>
+              <span class="block rounded-3xl h-[10px]" [style.width.%]="(p.base_stat / 1.75)"
+                    [style.background]="'linear-gradient(to right, rgba(' + firstTypeColor + ', 0.4), rgb(' + firstTypeColor + '))'"></span>
             </div>
           </li>
         </ul>
       </div>
 
-      <div class="w-full text-xl tracking-wide my-4"
-           [style.color]="'rgb(' + firstTypeColor + ')'"
-      >Weaknesses
+      <div class="w-full text-xl tracking-wide my-4" [style.color]="'rgb(' + firstTypeColor + ')'">Weaknesses
       </div>
       <div class="w-full text-center grid grid-cols-3 place-items-center">
-           <span *ngFor="let d of doubleDamageFrom"
-                 class="text-sm w-20 rounded-3xl flex justify-center items-center my-4"
-           ><img src="/assets/icons/{{d}}.svg"
-                 [style.background]="'rgb(' + typeColor(d) + ')'"
-                 [style.box-shadow]="'rgba(' + typeColor(d) + ', 0.7) 0px 0px 10px'"
-                 class="flex-1 p-1 rounded-full"/>
-            <span class="flex-1 text-base ml-2">2x</span>
-          </span>
-        <span *ngFor="let d of normalDamageFrom"
-              class="text-sm w-20 rounded-3xl flex justify-center items-center my-4">
-        <img src="/assets/icons/{{d}}.svg"
-             [style.background]="'rgb(' + typeColor(d) + ')'"
-             [style.box-shadow]="'rgba(' + typeColor(d) + ', 0.7) 0px 0px 10px'"
-             class="flex-1 p-1 rounded-full"/>
-            <span class="flex-1 text-base ml-2">1x</span>
-          </span>
+        <span *ngFor="let d of doubleDamageFrom" class="text-sm w-20 rounded-3xl flex justify-center items-center my-4">
+          <img [src]="iconPath(d)" [style.background]="'rgb(' + typeColor(d) + ')'"
+               [style.box-shadow]="'rgba(' + typeColor(d) + ', 0.7) 0px 0px 10px'" class="flex-1 p-1 rounded-full"/>
+          <span class="flex-1 text-base ml-2">
+            2x</span>
+        </span>
+        <span *ngFor="let d of normalDamageFrom" class="text-sm w-20 rounded-3xl flex justify-center items-center my-4">
+          <img [src]="iconPath(d)" [style.background]="'rgb(' + typeColor(d) + ')'"
+               [style.box-shadow]="'rgba(' + typeColor(d) + ', 0.7) 0px 0px 10px'"
+               class="flex-1 p-1 rounded-full w-8 h-auto"/>
+          <span class="flex-1 text-base ml-2">
+            1x</span>
+        </span>
         <span *ngFor="let d of halfDamageFrom"
-              class="text-sm w-20 rounded-3xl flex justify-center items-center my-4"
-        ><img src="/assets/icons/{{d}}.svg"
-              [style.background]="'rgb(' + typeColor(d) + ')'"
-              [style.box-shadow]="'rgba(' + typeColor(d) + ', 0.7) 0px 0px 10px'"
-              class="flex-1 p-1 rounded-full"/>
-            <span class="flex-1 text-base ml-2">1/2x</span>
-          </span>
+              class="text-sm w-20 rounded-3xl flex justify-center items-center my-4"><img [src]="iconPath(d)"
+                                                                                          [style.background]="'rgb(' + typeColor(d) + ')'"
+                                                                                          [style.box-shadow]="'rgba(' + typeColor(d) + ', 0.7) 0px 0px 10px'"
+                                                                                          class="flex-1 p-1 rounded-full"/>
+          <span class="flex-1 text-base ml-2">1/2x</span>
+        </span>
       </div>
     </swiper-slide>
     <swiper-slide class="px-6">
-      <app-evolution-item
-        class="w-full"
-        *ngIf="pokemonSpecies && evolutionURL"
-        [pokemonDetails]="pokemonDetails"
-        [evolutionURL]="evolutionURL"
-      />
+      <app-evolution-item class="w-full" *ngIf="pokemonSpecies && evolutionURL" [pokemonDetails]="pokemonDetails"
+                          [evolutionURL]="evolutionURL"/>
     </swiper-slide>
   </swiper-container>
 
