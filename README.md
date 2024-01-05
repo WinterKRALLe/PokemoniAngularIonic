@@ -41,6 +41,9 @@ ionic cap build android --prod
 
 3. Otevře se Android Studio, nyní můžete vybuildit apk. V záložce Build -> Build APK(s)
 Svoje apk naleznete v `android/app/build/outputs/apk/debug/app-debug.apk`
+### Ještě taková drobnost
+Používám klasickou webovou local storage, měla by se použít nativní [Storage API](https://capacitorjs.com/docs/v2/guides/storage) z package @capacitor/preferences 
+
 ### Linux
 Linux uživatelé budou pravděpodobně muset přidat 2 cesty do `.bashrc` nebo `.zshrc` či do jiného scriptu podle toho, jakou používáte shell, pokud:
 
