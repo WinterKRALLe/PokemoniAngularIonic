@@ -5,7 +5,7 @@
     <img src="https://img.shields.io/github/repo-size/WinterKRALLe/PokemoniAngularIonic?style=for-the-badge&color=a8c7ff&labelColor=1a1b1f">
 </div>
 
-### Cross-platform web/app vytvořena pomocí [Ionic frameworku](https://ionicframework.com/) a [PokeAPI](https://pokeapi.co)
+### Cross-platform web/app vytvořena pomocí [Ionic frameworku](https://ionicframework.com/) a [PokeAPI](https://pokeapi.co), nadesignovaná s [Tailwind CSS](https://tailwindcss.com/)
 
 <div align="center">
   <img width="40%" src="https://github.com/WinterKRALLe/PokemoniAngularIonic/blob/main/.github/homepage.png?raw=true"  />
@@ -39,7 +39,7 @@ npx capacitor-assets generate
 ionic cap build android --prod
 ```
 
-3. Otevře se Android Studio, nyní můžete vybuildit apk. V záložce Build -> Build APK(s)
+3. Otevře se Android Studio, nyní můžete vybuildit apk. V záložce Build -> Build APK(s)  
 Svoje apk naleznete v `android/app/build/outputs/apk/debug/app-debug.apk`
 ### Ještě taková drobnost
 Používám klasickou webovou local storage, měla by se použít nativní [Storage API](https://capacitorjs.com/docs/v2/guides/storage) z package @capacitor/preferences 
